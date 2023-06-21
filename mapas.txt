@@ -5,3 +5,5 @@ anubis
 dust2
 mirage
 overpass
+ancient
+vertigo

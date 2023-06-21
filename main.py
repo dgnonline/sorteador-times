@@ -10,7 +10,7 @@ def carregar_jogadores(nome_arquivo):
             jogadores.append((jogador, int(habilidade)))
     return jogadores
 
-# Função para carregar a sequência de mapas a partir de um arquivo txt
+# Função para carregar os mapas a partir de um arquivo txt
 def carregar_mapas(nome_arquivo):
     mapas = []
     with open(nome_arquivo, 'r') as arquivo:
@@ -34,22 +34,28 @@ def sortear_times(jogadores):
 
     return time1, time2
 
+# Função para calcular a média de habilidade de um time
+def calcular_media_habilidade(time):
+    habilidades = [jogador[1] for jogador in time]
+    media = sum(habilidades) / len(habilidades)
+    return media
+
 # Função para sortear a sequência de mapas
 def sortear_sequencia_mapas(mapas):
     sequencia_sorteada = random.sample(mapas, len(mapas))
     return sequencia_sorteada
 
-# Função para exibir os times e a sequência de mapas
-def exibir_resultados(time1, time2, sequencia_mapas):
+# Função para exibir os times e a média de habilidade de cada time
+def exibir_resultados(time1, time2, media_time1, media_time2, sequencia_mapas):
     print("Time 1:")
     for jogador in time1:
         print(f"Jogador: {jogador[0]}, Habilidade: {jogador[1]}")
-    print("")
+    print(f"Média de Habilidade: {media_time1}\n")
 
     print("Time 2:")
     for jogador in time2:
         print(f"Jogador: {jogador[0]}, Habilidade: {jogador[1]}")
-    print("")
+    print(f"Média de Habilidade: {media_time2}\n")
 
     print("Sequência de Mapas:")
     for i, mapa in enumerate(sequencia_mapas):
@@ -67,12 +73,30 @@ mapas = carregar_mapas(nome_arquivo_mapas)
 if len(jogadores) < 10:
     print("Número insuficiente de jogadores.")
 else:
-    # Sorteia os times
+    # Sorteia os times inicialmente
     random.shuffle(jogadores)
     time1, time2 = sortear_times(jogadores)
+
+    # Calcular as médias de habilidade dos times
+    media_time1 = calcular_media_habilidade(time1)
+    media_time2 = calcular_media_habilidade(time2)
+
+    # Realiza trocas entre os times até que a diferença de média seja mínima
+    while abs(media_time1 - media_time2) > 1:
+        jogador_time1 = random.choice(time1)
+        jogador_time2 = random.choice(time2)
+
+        time1.remove(jogador_time1)
+        time2.remove(jogador_time2)
+
+        time1.append(jogador_time2)
+        time2.append(jogador_time1)
+
+        media_time1 = calcular_media_habilidade(time1)
+        media_time2 = calcular_media_habilidade(time2)
 
     # Sorteia a sequência de mapas
     sequencia_mapas = sortear_sequencia_mapas(mapas)
 
-    # Exibe os times e a sequência de mapas
-    exibir_resultados(time1, time2, sequencia_mapas)
+    # Exibe os times, as médias de habilidade e a sequência de mapas
+    exibir_resultados(time1, time2, media_time1, media_time2, sequencia_mapas)
