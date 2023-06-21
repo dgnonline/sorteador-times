@@ -28,15 +28,9 @@ def lidar_com_espectadores(time1, time2, espectadores):
                 time2.remove(jogador_time_perdedor)
                 print(f"Espectador {i+1}: {espectador} - Tira do TIME VENCEDOR")
 
-# Função para calcular a média de habilidade de um time
-def calcular_media_habilidade(time):
-    habilidades = [jogador[1] for jogador in time]
-    media = sum(habilidades) / len(habilidades)
-    return media
-
 # Exemplo de uso
-time1 = [("Jogador1", 20), ("Jogador2", 25), ("Jogador3", 18), ("Jogador4", 22), ("Jogador5", 19)]
-time2 = [("Jogador6", 23), ("Jogador7", 21), ("Jogador8", 24), ("Jogador9", 17), ("Jogador10", 20)]
+time1 = ["Jogador1", "Jogador2", "Jogador3", "Jogador4", "Jogador5"]
+time2 = ["Jogador6", "Jogador7", "Jogador8", "Jogador9", "Jogador10"]
 espectadores = carregar_espectadores("spec.txt")
 
 lidar_com_espectadores(time1, time2, espectadores)
